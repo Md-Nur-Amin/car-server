@@ -33,6 +33,7 @@ async function run() {
     await client.connect();
 
     const serviceCollection = client.db('carsDoc').collection('services');
+    const bookingCollection = client.db('cardDoc').collection('booking')
 
     app.get('/services', async (req, res) => {
       const cursor = serviceCollection.find();
@@ -72,6 +73,14 @@ async function run() {
     });
 
 
+    //booking
+    app.post('booking', async(req, res)=>{ //// post means creation
+      const booking = req.body;
+      
+
+    })
+
+
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
     console.log("Pinged your deployment. You successfully connected to MongoDB!");
@@ -83,7 +92,6 @@ async function run() {
 run().catch(console.dir);
 
 //mongodb end
-
 
 
 app.get('/', (req, res) => {
