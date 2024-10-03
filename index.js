@@ -33,7 +33,7 @@ async function run() {
     await client.connect();
 
     const serviceCollection = client.db('carsDoc').collection('services');
-    const bookingCollection = client.db('cardDoc').collection('booking')
+    const bookingCollection = client.db('carsDoc').collection('booking')
 
     app.get('/services', async (req, res) => {
       const cursor = serviceCollection.find();
@@ -74,10 +74,11 @@ async function run() {
 
 
     //booking
-    app.post('booking', async(req, res)=>{ //// post means creation
+    app.post('/booking', async(req, res)=>{ //// post means creation
       const booking = req.body;
-      
-
+      console.log(booking);
+      const result= await bookingCollection.insertOne(booking);
+      res.send(result);
     })
 
 
