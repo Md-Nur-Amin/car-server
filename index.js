@@ -72,14 +72,59 @@ async function run() {
       }
     });
 
+    // booking get
+    app.get('/booking', async(req, res)=>{
+      console.log((req.query.email));
+      let query = {};
+      if(req.query?.email){
+        query = {email:req.query.email}
+      }
+      const result = await bookingCollection.find(query).toArray();
+      res.send(result)
+    })
 
-    //booking
-    app.post('/booking', async(req, res)=>{ //// post means creation
+    //booking post
+    app.post('/booking', async (req, res) => { //// post means creation
       const booking = req.body;
       console.log(booking);
-      const result= await bookingCollection.insertOne(booking);
+      const result = await bookingCollection.insertOne(booking);
       res.send(result);
     })
+
+
+    app.put('/booking/:id', async(req, res)=>{
+      const updatedBookings = req.body;
+      
+    })
+
+    // booking delete
+    app.delete('/booking/:id', async (req, res)=>{
+      const id = req.params.id;
+      const query = {_id: new ObjectId(id)}
+      const result = await bookingCollection.deleteOne(query)
+      res.send(result);
+    })
+
+    // Get bookings based on user email (e.g., /booking?email=user@example.com)
+    // app.get('/booking', async (req, res) => {
+    //   try {
+    //     const email = req.query.email; // Extract email from query parameters
+    //     if (!email) {
+    //       return res.status(400).json({ error: 'Email query parameter is required' });
+    //     }
+
+    //     const query = { email: email }; // Create a filter to find bookings by email
+    //     const bookings = await bookingCollection.find(query).toArray(); // Fetch bookings from DB
+    //     res.status(200).json(bookings); // Send bookings as JSON response
+    //   } catch (error) {
+    //     console.error("Error fetching bookings:", error);
+    //     res.status(500).send("Internal Server Error");
+    //   }
+    // });
+
+
+
+
 
 
     // Send a ping to confirm a successful connection
