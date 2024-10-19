@@ -92,9 +92,22 @@ async function run() {
     })
 
 
-    app.put('/booking/:id', async(req, res)=>{
+    app.patch('/booking/:id', async(req, res)=>{
+
+      const id = req.params.id;
+      const filter = {_id :  new ObjectId(id) }
       const updatedBookings = req.body;
+      console.log(updatedBookings);
       
+      const updateDoc = {
+        $set: {
+          status: updatedBookings.status
+        },
+      };
+      const result = await bookingCollection.updateOne(filter, updateDoc);
+      res.send(result);
+      
+
     })
 
     // booking delete
